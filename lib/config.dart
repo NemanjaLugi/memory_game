@@ -5,13 +5,20 @@ class AppColors {
 }
 
 class Strings {
-  static String wonTitle = '';
-  static String loseTitle = '';
-  static String wonDescription = '';
-  static String loseDescription = '';
+  static String wonTitle = 'Čestitamo';
+  static String loseTitle = 'Vreme je isteklo';
+  static String wonDescription = 'Vaše vreme je';
+  static String wonDescription2 = 'sekundi.';
+  static String wonDescription3 = 'sekunde.';
+  static String wonDescription4 = 'sekunda.';
+  static String loseDescription = 'Pokušajte ponovo ili se vratite nazad';
   static String homeAction = 'HOME';
   static String restartAction = 'RESTART';
   static String startAction = 'START';
   static String appTitle = 'Memory game';
   static String appWelcomeText = 'Welcome to super cool Memory Game';
+}
+
+class AppConfigs {
+  static int fieldNumber = 16;
 }

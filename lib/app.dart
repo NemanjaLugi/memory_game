@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Text('Memory game'),
+            title: Text(Strings.appTitle),
             backgroundColor: AppColors.green.withOpacity(0.8)),
         body: SafeArea(
           child: Container(
@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Welcome to super cool Memory Game',
+                  Strings.appWelcomeText,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 30.0,
@@ -54,7 +54,8 @@ class HomePage extends StatelessWidget {
                       onPressed: () => Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => GamePage(size: 16)),
+                              builder: (context) =>
+                                  GamePage(size: AppConfigs.fieldNumber)),
                           (Route<dynamic> route) => false),
                       child: Text(
                         'Start'.toUpperCase(),

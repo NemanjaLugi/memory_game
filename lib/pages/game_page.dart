@@ -38,11 +38,11 @@ class _GamePageState extends State<GamePage> {
     for (var i = 0; i < widget.size ~/ 2; i++) {
       data.add(i.toString());
     }
-    startTimer();
+    _startTimer();
     data.shuffle();
   }
 
-  startTimer() {
+  _startTimer() {
     const oneSec = const Duration(seconds: 1);
     timer = new Timer.periodic(
       oneSec,
@@ -50,6 +50,7 @@ class _GamePageState extends State<GamePage> {
         () {
           if (time < 1) {
             timer.cancel();
+            _showResult(true);
           } else {
             time = time - 1;
           }
@@ -68,7 +69,7 @@ class _GamePageState extends State<GamePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Memory game'),
+        title: Text(Strings.appTitle),
         backgroundColor: AppColors.green.withOpacity(0.8),
       ),
       body: SafeArea(
@@ -120,7 +121,7 @@ class _GamePageState extends State<GamePage> {
                                 if (cardFlips.every((t) => t == false)) {
                                   print("Won");
                                   timer.cancel();
-                                  showResult(context);
+                                  _showResult(true);
                                 }
                               }
                             }
@@ -168,25 +169,27 @@ class _GamePageState extends State<GamePage> {
     );
   }
 
-  showResult(context) {
+  _showResult(bool isWon) {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: Text("Won!!!"),
+        title: Text(isWon ? Strings.wonTitle : Strings.loseTitle,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
         content: Text(
-          "Time $time",
-          style: Theme.of(context).textTheme.headline2,
-        ),
+            isWon ? _getWonSecondsString(time) : Strings.loseDescription,
+            style: TextStyle(fontWeight: FontWeight.normal, fontSize: 18)),
         actions: <Widget>[
           FlatButton(
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => GamePage(size: 16)),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          GamePage(size: AppConfigs.fieldNumber)),
                   (Route<dynamic> route) => false);
             },
-            child: Text("RESTART"),
+            child: Text(Strings.restartAction),
           ),
           FlatButton(
             onPressed: () {
@@ -195,10 +198,20 @@ class _GamePageState extends State<GamePage> {
                   MaterialPageRoute(builder: (context) => HomePage()),
                   (Route<dynamic> route) => false);
             },
-            child: Text("HOME"),
+            child: Text(Strings.homeAction),
           ),
         ],
       ),
     );
+  }
+
+  String _getWonSecondsString(int seconds) {
+    if (seconds == 1) {
+      return '${Strings.wonDescription} 1 ${Strings.wonDescription4}';
+    } else if (seconds > 1 && seconds < 5) {
+      return '${Strings.wonDescription} $seconds ${Strings.wonDescription3}';
+    } else {
+      return '${Strings.wonDescription} $seconds ${Strings.wonDescription2}';
+    }
   }
 }
