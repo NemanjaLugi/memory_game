@@ -2,11 +2,9 @@ import 'dart:async';
 
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:memory_card/config.dart';
 
 import '../app.dart';
-import '../app.dart';
-
-// int level = 16;
 
 class GamePage extends StatefulWidget {
   final int size;
@@ -63,84 +61,91 @@ class _GamePageState extends State<GamePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Memory game'),
-        backgroundColor: Colors.deepOrange.withOpacity(0.8),
+        backgroundColor: AppColors.green.withOpacity(0.8),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text(
-                  "$time",
-                  style: Theme.of(context).textTheme.display2,
-                ),
-              ),
-              Theme(
-                data: ThemeData.dark(),
-                child: Padding(
+        child: Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/background-img.png'),
+                  fit: BoxFit.cover)),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Padding(
                   padding: EdgeInsets.all(16.0),
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                    ),
-                    itemBuilder: (context, index) => FlipCard(
-                      key: cardStateKeys[index],
-                      onFlip: () {
-                        if (!flip) {
-                          flip = true;
-                          previousIndex = index;
-                        } else {
-                          flip = false;
-                          if (previousIndex != index) {
-                            if (data[previousIndex] != data[index]) {
-                              cardStateKeys[previousIndex]
-                                  .currentState
-                                  .toggleCard();
-                              previousIndex = index;
-                            } else {
-                              cardFlips[previousIndex] = false;
-                              cardFlips[index] = false;
-                              print(cardFlips);
+                  child: Text(
+                    "$time",
+                    style: Theme.of(context).textTheme.display2,
+                  ),
+                ),
+                Theme(
+                  data: ThemeData.dark(),
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 4,
+                      ),
+                      itemBuilder: (context, index) => FlipCard(
+                        key: cardStateKeys[index],
+                        onFlip: () {
+                          if (!flip) {
+                            flip = true;
+                            previousIndex = index;
+                          } else {
+                            flip = false;
+                            if (previousIndex != index) {
+                              if (data[previousIndex] != data[index]) {
+                                cardStateKeys[previousIndex]
+                                    .currentState
+                                    .toggleCard();
+                                previousIndex = index;
+                              } else {
+                                cardFlips[previousIndex] = false;
+                                cardFlips[index] = false;
+                                print(cardFlips);
 
-                              if (cardFlips.every((t) => t == false)) {
-                                print("Won");
-                                timer.cancel();
-                                showResult(context);
+                                if (cardFlips.every((t) => t == false)) {
+                                  print("Won");
+                                  timer.cancel();
+                                  showResult(context);
+                                }
                               }
                             }
                           }
-                        }
-                      },
-                      direction: FlipDirection.HORIZONTAL,
-                      flipOnTouch: cardFlips[index],
-                      front: Container(
-                        margin: EdgeInsets.all(4.0),
-                        color: Colors.deepOrange.withOpacity(0.3),
-                      ),
-                      back: Container(
-                        margin: EdgeInsets.all(4.0),
-                        color: Colors.deepOrange,
-                        child: Center(
-                          child: Text(
-                            "${data[index]}",
-                            style: Theme.of(context).textTheme.display2,
+                        },
+                        direction: FlipDirection.HORIZONTAL,
+                        flipOnTouch: cardFlips[index],
+                        front: Container(
+                          margin: EdgeInsets.all(4.0),
+                          color: AppColors.green.withOpacity(0.3),
+                        ),
+                        back: Container(
+                          margin: EdgeInsets.all(4.0),
+                          color: AppColors.green,
+                          child: Center(
+                            child: Text(
+                              "${data[index]}",
+                              style: Theme.of(context).textTheme.display2,
+                            ),
                           ),
                         ),
                       ),
+                      itemCount: data.length,
                     ),
-                    itemCount: data.length,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.deepOrange.withOpacity(0.8),
+        backgroundColor: AppColors.green.withOpacity(0.8),
         child: Icon(
           Icons.exit_to_app_rounded,
           color: Colors.white,

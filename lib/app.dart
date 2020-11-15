@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
+import 'config.dart';
 import 'pages/game_page.dart';
 
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Memory Card Game',
-        debugShowCheckedModeBanner: false,
-        home: HomePage());
+      title: 'Memory Card Game',
+      debugShowCheckedModeBanner: false,
+      home: HomePage(),
+    );
   }
 }
 
@@ -18,9 +20,13 @@ class HomePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
             title: Text('Memory game'),
-            backgroundColor: Colors.deepOrange.withOpacity(0.8)),
+            backgroundColor: AppColors.green.withOpacity(0.8)),
         body: SafeArea(
           child: Container(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/background-img.png'),
+                    fit: BoxFit.cover)),
             padding: EdgeInsets.all(8.0),
             alignment: Alignment.center,
             child: Column(
@@ -44,7 +50,7 @@ class HomePage extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 15.0),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0)),
-                      color: Colors.deepOrange.withOpacity(0.8),
+                      color: AppColors.green.withOpacity(0.8),
                       onPressed: () => Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
