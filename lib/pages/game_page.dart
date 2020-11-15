@@ -73,90 +73,25 @@ class _GamePageState extends State<GamePage> {
         backgroundColor: AppColors.green.withOpacity(0.8),
       ),
       body: SafeArea(
-        child: Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/background-img.png'),
-                  fit: BoxFit.cover)),
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    "$time",
-                    style: Theme.of(context).textTheme.headline2,
-                  ),
-                ),
-                Theme(
-                  data: ThemeData.dark(),
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: GridView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
-                      ),
-                      itemBuilder: (context, index) => FlipCard(
-                        key: cardStateKeys[index],
-                        onFlip: () {
-                          if (!flip) {
-                            flip = true;
-                            previousIndex = index;
-                          } else {
-                            flip = false;
-                            if (previousIndex != index) {
-                              if (data[previousIndex] != data[index]) {
-                                cardStateKeys[previousIndex]
-                                    .currentState
-                                    .toggleCard();
-                                previousIndex = index;
-                              } else {
-                                cardFlips[previousIndex] = false;
-                                cardFlips[index] = false;
-                                print(cardFlips);
-
-                                if (cardFlips.every((t) => t == false)) {
-                                  print("Won");
-                                  timer.cancel();
-                                  _showResult(true);
-                                }
-                              }
-                            }
-                          }
-                        },
-                        direction: FlipDirection.HORIZONTAL,
-                        flipOnTouch: cardFlips[index],
-                        front: Container(
-                          margin: EdgeInsets.all(4.0),
-                          color: AppColors.green.withOpacity(0.3),
-                          child: Image.asset(
-                            'assets/Card-Cover.png',
-                            alignment: Alignment.center,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        back: Container(
-                          margin: EdgeInsets.all(4.0),
-                          color: AppColors.green,
-                          child: Image.asset(
-                            'assets/Card-${int.parse(data[index]) + 1}.png',
-                            alignment: Alignment.center,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      itemCount: data.length,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          child: Stack(
+        children: [
+          Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/background-img.png'),
+                    fit: BoxFit.cover)),
           ),
-        ),
-      ),
+          Align(
+            alignment: Alignment.center,
+            child: _buildCardGrid(),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: _buildCounter(context),
+          )
+        ],
+      )),
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.green.withOpacity(0.8),
         child: Icon(
@@ -169,6 +104,80 @@ class _GamePageState extends State<GamePage> {
               MaterialPageRoute(builder: (context) => HomePage()),
               (Route<dynamic> route) => false);
         },
+      ),
+    );
+  }
+
+  Padding _buildCounter(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(top: 60.0),
+      child: Text(
+        "$time",
+        style: Theme.of(context).textTheme.headline2,
+      ),
+    );
+  }
+
+  Theme _buildCardGrid() {
+    return Theme(
+      data: ThemeData.dark(),
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: GridView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4,
+          ),
+          itemBuilder: (context, index) => FlipCard(
+            key: cardStateKeys[index],
+            onFlip: () {
+              if (!flip) {
+                flip = true;
+                previousIndex = index;
+              } else {
+                flip = false;
+                if (previousIndex != index) {
+                  if (data[previousIndex] != data[index]) {
+                    cardStateKeys[previousIndex].currentState.toggleCard();
+                    previousIndex = index;
+                  } else {
+                    cardFlips[previousIndex] = false;
+                    cardFlips[index] = false;
+                    print(cardFlips);
+
+                    if (cardFlips.every((t) => t == false)) {
+                      print("Won");
+                      timer.cancel();
+                      _showResult(true);
+                    }
+                  }
+                }
+              }
+            },
+            direction: FlipDirection.HORIZONTAL,
+            flipOnTouch: cardFlips[index],
+            front: Container(
+              margin: EdgeInsets.all(4.0),
+              color: AppColors.green.withOpacity(0.3),
+              child: Image.asset(
+                'assets/Card-Cover.png',
+                alignment: Alignment.center,
+                fit: BoxFit.cover,
+              ),
+            ),
+            back: Container(
+              margin: EdgeInsets.all(4.0),
+              color: AppColors.green,
+              child: Image.asset(
+                'assets/Card-${int.parse(data[index]) + 1}.png',
+                alignment: Alignment.center,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          itemCount: data.length,
+        ),
       ),
     );
   }
