@@ -57,7 +57,7 @@ class HomePage extends StatelessWidget {
                               builder: (context) => GamePage(size: 16)),
                           (Route<dynamic> route) => false),
                       child: Text(
-                        'Start game'.toUpperCase(),
+                        'Start'.toUpperCase(),
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
