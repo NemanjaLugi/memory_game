@@ -77,7 +77,7 @@ class _GamePageState extends State<GamePage> {
                   padding: EdgeInsets.all(16.0),
                   child: Text(
                     "$time",
-                    style: Theme.of(context).textTheme.display2,
+                    style: Theme.of(context).textTheme.headline2,
                   ),
                 ),
                 Theme(
@@ -130,7 +130,7 @@ class _GamePageState extends State<GamePage> {
                           child: Center(
                             child: Text(
                               "${data[index]}",
-                              style: Theme.of(context).textTheme.display2,
+                              style: Theme.of(context).textTheme.headline2,
                             ),
                           ),
                         ),
@@ -168,7 +168,7 @@ class _GamePageState extends State<GamePage> {
         title: Text("Won!!!"),
         content: Text(
           "Time $time",
-          style: Theme.of(context).textTheme.display2,
+          style: Theme.of(context).textTheme.headline2,
         ),
         actions: <Widget>[
           FlatButton(
