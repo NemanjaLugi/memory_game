@@ -141,11 +141,10 @@ class _GamePageState extends State<GamePage> {
                         back: Container(
                           margin: EdgeInsets.all(4.0),
                           color: AppColors.green,
-                          child: Center(
-                            child: Text(
-                              "${data[index]}",
-                              style: Theme.of(context).textTheme.headline2,
-                            ),
+                          child: Image.asset(
+                            'assets/Card-${int.parse(data[index]) + 1}.png',
+                            alignment: Alignment.center,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
