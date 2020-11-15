@@ -132,6 +132,11 @@ class _GamePageState extends State<GamePage> {
                         front: Container(
                           margin: EdgeInsets.all(4.0),
                           color: AppColors.green.withOpacity(0.3),
+                          child: Image.asset(
+                            'assets/Card-Cover.png',
+                            alignment: Alignment.center,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                         back: Container(
                           margin: EdgeInsets.all(4.0),
