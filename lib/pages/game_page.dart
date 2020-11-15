@@ -50,7 +50,7 @@ class _GamePageState extends State<GamePage> {
         () {
           if (time < 1) {
             timer.cancel();
-            _showResult(true);
+            _showResult(false);
           } else {
             time = time - 1;
           }
@@ -181,7 +181,9 @@ class _GamePageState extends State<GamePage> {
         title: Text(isWon ? Strings.wonTitle : Strings.loseTitle,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
         content: Text(
-            isWon ? _getWonSecondsString(time) : Strings.loseDescription,
+            isWon
+                ? '${Strings.wonDescription} $time ${Strings.wonDescription2}'
+                : Strings.loseDescription,
             style: TextStyle(fontWeight: FontWeight.normal, fontSize: 18)),
         actions: <Widget>[
           FlatButton(
@@ -207,15 +209,5 @@ class _GamePageState extends State<GamePage> {
         ],
       ),
     );
-  }
-
-  String _getWonSecondsString(int seconds) {
-    if (seconds == 1) {
-      return '${Strings.wonDescription} 1 ${Strings.wonDescription4}';
-    } else if (seconds > 1 && seconds < 5) {
-      return '${Strings.wonDescription} $seconds ${Strings.wonDescription3}';
-    } else {
-      return '${Strings.wonDescription} $seconds ${Strings.wonDescription2}';
-    }
   }
 }
