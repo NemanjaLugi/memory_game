@@ -22,7 +22,7 @@ class _GamePageState extends State<GamePage> {
   int previousIndex = -1;
   bool flip = false;
 
-  int time = 0;
+  int time = 60;
   Timer timer;
 
   @override
@@ -43,11 +43,19 @@ class _GamePageState extends State<GamePage> {
   }
 
   startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (t) {
-      setState(() {
-        time = time + 1;
-      });
-    });
+    const oneSec = const Duration(seconds: 1);
+    timer = new Timer.periodic(
+      oneSec,
+      (Timer timer) => setState(
+        () {
+          if (time < 1) {
+            timer.cancel();
+          } else {
+            time = time - 1;
+          }
+        },
+      ),
+    );
   }
 
   @override
