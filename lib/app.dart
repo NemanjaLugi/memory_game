@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('assets/background-img.png'),
+                    image: AssetImage('assets/bg-img.png'),
                     fit: BoxFit.cover)),
             padding: EdgeInsets.all(8.0),
             alignment: Alignment.center,

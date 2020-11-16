@@ -79,7 +79,7 @@ class _GamePageState extends State<GamePage> {
             alignment: Alignment.center,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('assets/background-img.png'),
+                    image: AssetImage('assets/bg-img.png'),
                     fit: BoxFit.cover)),
           ),
           Align(
