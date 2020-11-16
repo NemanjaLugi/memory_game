@@ -7,7 +7,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Memory Card Game',
+      title: 'Incentive P&G',
       debugShowCheckedModeBanner: false,
       home: HomePage(),
     );

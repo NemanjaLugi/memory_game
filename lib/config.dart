@@ -14,7 +14,7 @@ class Strings {
   static String homeAction = 'HOME';
   static String restartAction = 'RESTART';
   static String startAction = 'START';
-  static String appTitle = 'Memory game';
+  static String appTitle = 'Incentive P&G';
   static String appWelcomeText = 'Welcome to super cool Memory Game';
 }
 
